@@ -17,9 +17,7 @@ file_mode: .asciz "r"
 # A null byte is appended after the file contents, but you are
 # encouraged to use read_bytes instead of treating the file contents
 # as a null terminated string.
-#
-# Technically, you should call free() on the returned pointer once
-# you are done with the buffer, but you are forgiven if you do not.
+
 read_file:
 	pushq %rbp
 	movq %rsp, %rbp

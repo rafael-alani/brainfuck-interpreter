@@ -4,13 +4,13 @@
 ##  / __  (      //  ) )   //   ) )   / /     //   ) ) ##
 ## //    ) )    //        //   / /   / /     //   / /  ##
 ##//____/ /    //        ((___( (   / /     //   / /   ##
-##                                            		   ##
-##                                            		   ##
-##    //  ) )                                 		   ##	
-## __//__                    ___       / ___  		   ##	
-##  //          //   / /   //   ) )   //\ \   		   ##	
-## //          //   / /   //         //  \ \  		   ##
-##//          ((___( (   ((____     //    \ \ 		   ##
+##                                            	      ##
+##                                            	      ##
+##    //  ) )                                 	      ##	
+## __//__                    ___       / ___  	      ##	
+##  //          //   / /   //   ) )   //\ \   	      ##	
+## //          //   / /   //         //  \ \  	      ##
+##//          ((___( (   ((____     //    \ \ 	      ##
 #########################################################
 .global brainfuck
 
@@ -25,9 +25,7 @@ char: .asciz "%c"
 test: .asciz "It works till here!\n"
 testHex: .asciz "%#010x\n"
 
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.-.
-# ++.>+++++.[-.>+.<]
-# Your brainfuck subroutine will receive one argument:
+# The brainfuck subroutine will receive one argument:
 # a zero termianted string containing the code to execute.
 
 #	%r12 source pointer
@@ -168,7 +166,7 @@ incrementF:
 decrementF:
 	decq %r14
 	jmp whileEndF
-	jmp aaa
+	
 #used to loop to the matching [ bracket if the cell is different from 0
 loopBackward:
 	cmpb $0, (%r13)

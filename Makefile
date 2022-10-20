@@ -1,4 +1,3 @@
-# test
 objects = build/main.o build/brainfuck.o build/read_file.o
 .PHONY: clean
 

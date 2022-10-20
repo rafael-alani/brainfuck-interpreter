@@ -35,7 +35,7 @@ main:
 	jz failed
 	movq %rax, -16(%rbp)
 
-	# in brainfuck all the logic is executed
+	# main logic is executed
 	movq %rax, %rdi
 	call brainfuck
 
