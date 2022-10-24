@@ -20,7 +20,7 @@ readChar: .byte, 0
 
 format_str: .asciz "We should be executing the following code:\n%s"
 
-formatChar: .asciz "%d\n"
+formatChar: .asciz "%c\n"
 char: .asciz "%c"
 test: .asciz "It works till here!\n"
 testHex: .asciz "%#010x\n"
@@ -35,11 +35,10 @@ testHex: .asciz "%#010x\n"
 brainfuck:
 	pushq %rbp
 	movq %rsp, %rbp
-	
-	#movq $0, %rax
-	#movq $formatChar, %rdi
-	#movb $65, %sil
-	#call printf
+
+	#calle saved registers
+	pushq %r12
+	pushq %r13
 
 	# save the pointer to the instruction and memory
 	movq %rdi, %r12
@@ -79,18 +78,14 @@ execute:
 #the stop condition is for the instruction bit to be equal with 0
 #if not increment the instruction pointer and go through every command
 executeEnd:
-	#movq $0, %rax
-	#movq $testHex, %rdi
-	#movq %r13, %rsi
-	#call printf
-
 	incq %r12
 	cmpb $0, (%r12)
 	jne execute
 
-	#movq $0, %rax
-	#movq $test, %rdi
-	#call printf
+	#calle saved registers
+	popq %r13
+	popq %r12
+
 exit:
 	movq %rbp, %rsp
 	popq %rbp
@@ -108,9 +103,6 @@ decrementMemPointer:
 
 #increments the memory cell at which the poitner points at
 incrementMemReference:
-	#movb (%r13), %r15b
-	#incb %r15b
-	#movb %r15b, (%r13)
 	incb (%r13)
 	jmp executeEnd
 
@@ -122,8 +114,8 @@ decrementMemReference:
 #used to print the data inside the cell the pointer points to as a %c
 printChar:
 	movq $0, %rax
-	movq $formatChar, %rdi
-	movzb (%r13), %rsi			#the only question here is if (%r13) contains the byte i want
+	movq $char, %rdi
+	movzb (%r13), %rsi		
 	call printf
 	jmp executeEnd
 
@@ -131,11 +123,6 @@ printChar:
 scanChar:
 	call getchar
 	movb %al, (%r13)
-	call getchar
-	#movq $0, %rax
-	#movq $char, %rdi
-	#movq %r13, %rsi
-	#call scanf
 	jmp executeEnd
 
 #used to loop to the matching ] bracket if the cell is different from 0
